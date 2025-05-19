@@ -11,7 +11,8 @@ class FornecedorDAO extends BaseDAO{
             $cpf = $fornecedor->getCNPJ();
 
             return $this->insert(
-                'fornecedor', ":nome, telefone, :endereco, :cnpj",[
+                'fornecedor', ":nome, :telefone, :endereco, :cnpj",
+                [
                     ':nome'=>$nome,
                     ':telefone'=>$telefone,
                     ':endereco'=>$endereco,
@@ -20,6 +21,21 @@ class FornecedorDAO extends BaseDAO{
                 );
         }catch (\Exception $e){
             throw new \Exception("Erro na gravação de dados.", 500);
+        }
+    }
+
+    public function verificaCNPJ($cnpj)
+    {
+        try {
+
+            $query = $this->select(
+                "SELECT * FROM fornecedor WHERE cnpj = '$cnpj' "
+            );
+
+            return $query->fetch();
+
+        }catch (Exception $e){
+            throw new \Exception("Erro no acesso aos dados.", 500);
         }
     }
 }

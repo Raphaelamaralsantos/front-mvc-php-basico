@@ -32,8 +32,8 @@ class FornecedorController extends Controller
 
         $fornecedorDAO = new FornecedorDAO();
 
-        if($fornecedorDAO->verificaTelefone($_POST['telefone'])){
-            Sessao::gravaMensagem("Telefone existente");
+        if($fornecedorDAO->verificaCNPJ($_POST['cnpj'])){
+            Sessao::gravaMensagem("CPNJ existente");
             $this->redirect('/fornecedor/cadastro');
         }
 

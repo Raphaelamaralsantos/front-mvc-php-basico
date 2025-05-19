@@ -24,7 +24,8 @@ class App
         define('DB_HOST'        , "localhost");
         define('DB_USER'        , "root");
         define('DB_PASSWORD'    , "");
-        define('DB_NAME'        , "phpcrud");
+        define('DB_NAME'        , "mvc_php_basico");
+        define('DB_CHARSET'     , "utf8");
         define('DB_DRIVER'      , "mysql");
 
         $this->url();
