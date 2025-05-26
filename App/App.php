@@ -18,7 +18,7 @@ class App
         /*
          * Constantes do sistema
          */
-        define('APP_HOST'       , $_SERVER['HTTP_HOST'] . "/mvc-php-basico");
+        define('APP_HOST'       , $_SERVER['HTTP_HOST'] . "/front-mvc-php-basico");
         define('PATH'           , realpath('./'));
         define('TITLE'          , "Primeira aplicação MVC em PHP ");
         define('DB_HOST'        , "localhost");
