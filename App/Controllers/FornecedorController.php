@@ -18,22 +18,22 @@ class FornecedorController extends Controller
 
     public function salvar()
     {
-        $Fornecedor = new Cliente();
-        $Fornecedor->setId($_POST['id']);
-        $Fornecedor->setNome($_POST['nome']);
-        $Fornecedor->setNomeFantasia($_POST['nomeFantasia']);
-        $Fornecedor->setCnpj($_POST['cnpj']);
-        $Fornecedor->setInscricaoEstadual($_POST['inscricaoEstadual']);
-        $Fornecedor->setEndereco($_POST['endereco']);
-        $Fornecedor->setTipoDeServico($_POST['tipoDeServico']);
-        $Fornecedor->setTelefone($_POST['telefone']);
+        $Fornecedor = new Fornecedor();
+        $Fornecedor->setId($_POST['id'] ?? null);
+        $Fornecedor->setNome($_POST['nome'] ?? '');
+        $Fornecedor->setNomeFantasia($_POST['nomeFantasia'] ?? '');
+        $Fornecedor->setCnpj($_POST['cnpj'] ?? '');
+        $Fornecedor->setInscricaoEstadual($_POST['inscricaoEstadual'] ?? '');
+        $Fornecedor->setEndereco($_POST['endereco'] ?? '');
+        $Fornecedor->setTipoDeServico($_POST['tipoDeServico'] ?? '');
+        $Fornecedor->setTelefone($_POST['telefone'] ?? '');
 
         Sessao::gravaFormulario($_POST);
 
         $fornecedorDAO = new FornecedorDAO();
 
-        if($fornecedorDAO->verificaCNPJ($_POST['cnpj'])){
-            Sessao::gravaMensagem("CPNJ existente");
+        if($fornecedorDAO->verificaCNPJ($_POST['cnpj'] ?? '')){
+            Sessao::gravaMensagem("CNPJ existente");
             $this->redirect('/fornecedor/cadastro');
         }
 
