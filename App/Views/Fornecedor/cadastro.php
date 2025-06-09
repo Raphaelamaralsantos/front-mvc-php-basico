@@ -58,7 +58,79 @@
         </div>
       </form>
       <script>
+        // Máscara de CNPJ e Telefone
+        document.addEventListener('DOMContentLoaded', function() {
+          // Máscara CNPJ
+          var cnpjInput = document.getElementById('cnpj');
+          if (cnpjInput) {
+            cnpjInput.addEventListener('input', function(e) {
+              let v = e.target.value.replace(/\D/g, '');
+              if (v.length > 14) v = v.slice(0, 14);
+              v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+              v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+              v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+              v = v.replace(/(\d{4})(\d)/, '$1-$2');
+              e.target.value = v;
+            });
+          }
+
+          // Máscara Telefone
+          var telInput = document.getElementById('telefone');
+          if (telInput) {
+            telInput.addEventListener('input', function(e) {
+              let v = e.target.value.replace(/\D/g, '');
+              if (v.length > 11) v = v.slice(0, 11);
+              if (v.length > 10) {
+                v = v.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+              } else if (v.length > 6) {
+                v = v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+              } else if (v.length > 2) {
+                v = v.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+              } else {
+                v = v.replace(/^(\d*)/, '($1');
+              }
+              e.target.value = v;
+            });
+          }
+        });
+
         function mostrarFeedback() {
+          // Validação de e-mail antes do feedback
+          var email = document.getElementById('email').value.trim();
+          var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            // Alerta customizado
+            var overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = 0;
+            overlay.style.left = 0;
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.background = 'rgba(0,0,0,0.4)';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            overlay.style.zIndex = 9999;
+
+            var box = document.createElement('div');
+            box.style.background = '#fff';
+            box.style.padding = '32px 24px';
+            box.style.borderRadius = '12px';
+            box.style.boxShadow = '0 2px 16px #0003';
+            box.style.textAlign = 'center';
+            box.innerHTML = '<h4 style="margin-bottom:16px;color:#283593;">Centro universitário Projeção</h4><div style="font-size:18px;">Por favor, informe um e-mail válido.</div><br><button style="margin-top:18px;padding:8px 24px;background:#ffd600;color:#232526;font-weight:bold;border:none;border-radius:6px;cursor:pointer;" id="btnEmailInvalido">OK</button>';
+
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+
+            document.getElementById('btnEmailInvalido').onclick = function() {
+              document.body.removeChild(overlay);
+              document.getElementById('email').focus();
+            };
+
+            return false;
+          }
+
           // Cria o fundo escurecido
           var overlay = document.createElement('div');
           overlay.style.position = 'fixed';
